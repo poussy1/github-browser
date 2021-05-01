@@ -21,38 +21,34 @@ function getDetails(result){
   })
   return itemsDetails
 }
-
+function updateRepos(result,page,reposDetails){
+  if(page==1){
+    return getDetails(result)
+  } else {
+    return reposDetails.concat(getDetails(result))
+  }
+}
 function App() {
 
   const [reposDetails,setReposDetails] = React.useState([])
   const [page,setPage] = React.useState(1)
 
   React.useEffect(()=>{
-    fetch(api)
+    var apiUrl = page==1?api:api+`&page=${page}`
+    fetch(apiUrl)
     .then(res => res.json())
     .then(
       (result) => { 
-        setReposDetails(getDetails(result))
+        setReposDetails(reposDetails=>updateRepos(result,page,reposDetails))
       }
     )
-  },[])
-  
-  function fetchMoreData(){
-    fetch(api+`&page=${page}`)
-    .then(res => res.json())
-    .then(
-      (result) => { 
-        setReposDetails(reposDetails.concat(getDetails(result)))
-        setPage(page=>page+1)
-      }
-    )
-  }
+  },[page])
 
   return (
     <div className="App">
       <InfiniteScroll
         dataLength={reposDetails.length}
-        next={fetchMoreData}
+        next={()=>setPage(page=>page+1)}
         hasMore={true}
         loader={<h4>Loading...</h4>}
       >
