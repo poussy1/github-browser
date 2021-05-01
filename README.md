@@ -6,10 +6,12 @@ To run this app type "npm start" at the project directory
 
 react-infinite-scroll-component : To provide the infinite scroll of the github repos,it's chosen for its reliabilty and ease of use.
 
-styled-components: To style the components in a descent way , it also improve code readability.
+styled-components: To style the components in a descent way , it also improves code readability.
 
 ## Install dependencies
 
 To run the project locally you have to install dependencies:
+
 npm install --save react-infinite-scroll-component
+
 npm install --save styled-components

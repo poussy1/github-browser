@@ -1,7 +1,6 @@
 import React from 'react'
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import logo from './logo.svg';
 import './App.css';
 import Card from './widgets/Card'
 const api = "https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc"
@@ -32,7 +31,7 @@ function App() {
     fetch(api)
     .then(res => res.json())
     .then(
-      (result) => { console.log(result)
+      (result) => { 
         setReposDetails(getDetails(result))
       }
     )
@@ -42,7 +41,7 @@ function App() {
     fetch(api+`&page=${page}`)
     .then(res => res.json())
     .then(
-      (result) => { console.log(result)
+      (result) => { 
         setReposDetails(reposDetails.concat(getDetails(result)))
         setPage(page=>page+1)
       }
