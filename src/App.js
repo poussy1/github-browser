@@ -5,11 +5,11 @@ import './App.css';
 import Card from './widgets/Card'
 const api = "https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc"
 
-function getDetails(result){
+function extractResponseData(result){
   var itemsDetails = [] 
   result.items.forEach(item=>{
     var repoDetail = {
-      imgUrl: item.owner.avatar_url,
+      imgUrl:item.owner.avatar_url,
       title:item.owner.login,
       brief:item.description,
       stars:item.forks,
@@ -21,11 +21,11 @@ function getDetails(result){
   })
   return itemsDetails
 }
-function updateRepos(result,page,reposDetails){
+function getReposDetails(result,page,reposDetails){
   if(page==1){
-    return getDetails(result)
+    return extractResponseData(result)
   } else {
-    return reposDetails.concat(getDetails(result))
+    return reposDetails.concat(extractResponseData(result))
   }
 }
 function App() {
@@ -39,7 +39,7 @@ function App() {
     .then(res => res.json())
     .then(
       (result) => { 
-        setReposDetails(reposDetails=>updateRepos(result,page,reposDetails))
+        setReposDetails(reposDetails=>getReposDetails(result,page,reposDetails))
       }
     )
   },[page])
